@@ -8,6 +8,8 @@ const tasksList = [
   { id: "7", text: "generate", completed: true }
 ];
 
+renderTasks(tasksList);
+
 function createListItem(task) {
   const label = document.createElement("label");
   label.innerHTML = task.text;
@@ -31,9 +33,35 @@ function createListItem(task) {
 
 function renderTasks(tasks) {
   const ul = document.querySelector("ul");
+  ul.innerHTML = "";
   for (let task of tasks) {
     const li = createListItem(task);
     ul.appendChild(li);
   }
 }
-renderTasks(tasksList);
+
+function getId(tasks) {
+  if (tasks.length === 0) {
+    return "1";
+  }
+  const ids = tasks.map(item => +item.id);
+  let maxId = ids[0];
+  for (let id of ids) {
+    if (id > maxId) {
+      maxId = id;
+    }
+  }
+  const newId = String(maxId + 1);
+  return newId;
+}
+
+function createNewTask() {
+  const input = document.getElementsByClassName("new-todo")[0];
+  let newTask = {};
+  newTask.id = getId(tasksList);
+  newTask.text = input.value;
+  newTask.completed = false;
+  tasksList.push(newTask);
+  input.value = "";
+  renderTasks(tasksList);
+}

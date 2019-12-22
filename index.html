@@ -14,6 +14,7 @@
         <header class="header">
           <h1>todos</h1>
           <input
+            onchange="createNewTask() "
             class="new-todo"
             placeholder="What needs to be done?"
             value=""
@@ -21,16 +22,8 @@
         </header>
         <section class="main">
           <input class="toggle-all" type="checkbox" />
-          <label for="toggle-all" onclick="allCheckLabel()"></label>
-          <ul class="todo-list">
-            <!-- <li class="todo">
-              <div class="view">
-                <input type="checkbox" class="toggle" checked />
-                <label>synthesize</label>
-                <button class="destroy"></button>
-              </div>
-            </li> -->
-          </ul>
+          <label for="toggle-all"></label>
+          <ul class="todo-list"></ul>
         </section>
       </div>
     </section>
