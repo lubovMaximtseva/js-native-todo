@@ -1,4 +1,4 @@
-const tasksList = [
+let tasksList = [
   { id: "1", text: "synthesize", completed: true },
   { id: "2", text: "override", completed: false },
   { id: "3", text: "index", completed: true },
@@ -15,6 +15,7 @@ function createListItem(task) {
   label.innerHTML = task.text;
   const button = document.createElement("button");
   button.className = "destroy";
+  button.onclick = deleteTask;
   const input = document.createElement("input");
   input.className = "toggle";
   input.type = "checkbox";
@@ -26,6 +27,7 @@ function createListItem(task) {
   div.appendChild(button);
   const li = document.createElement("li");
   li.className = "todo";
+  li.setAttribute("id", task.id);
   li.appendChild(div);
 
   return li;
@@ -63,5 +65,13 @@ function createNewTask() {
   newTask.completed = false;
   tasksList.push(newTask);
   input.value = "";
+  renderTasks(tasksList);
+}
+
+function deleteTask(event) {
+  const id = event.target.parentNode.parentNode.id;
+  const newTasksList = tasksList.filter(task => task.id !== id);
+  console.log(newTasksList);
+  tasksList = newTasksList;
   renderTasks(tasksList);
 }
