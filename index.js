@@ -100,7 +100,7 @@ function countActiveTasks(tasks) {
 }
 
 function deleteCompletedTasks() {
-  const newTasksList = tasksList.filter(task => !task.completed === true);
+  const newTasksList = tasksList.filter(task => task.completed === false);
   tasksList = newTasksList;
   renderTasks(tasksList);
 }
