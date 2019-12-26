@@ -9,6 +9,7 @@ let tasksList = [
 ];
 
 renderTasks(tasksList);
+countActiveTasks(tasksList);
 
 function createListItem(task) {
   const label = document.createElement("label");
@@ -67,6 +68,7 @@ function createNewTask() {
   tasksList.push(newTask);
   input.value = "";
   renderTasks(tasksList);
+  countActiveTasks(tasksList);
 }
 
 function deleteTask(event) {
@@ -74,6 +76,7 @@ function deleteTask(event) {
   const newTasksList = tasksList.filter(task => task.id !== id);
   tasksList = newTasksList;
   renderTasks(tasksList);
+  countActiveTasks(tasksList);
 }
 
 function toggleTask(event) {
@@ -87,4 +90,11 @@ function toggleTask(event) {
     return task;
   });
   tasksList = newTaskList;
+  countActiveTasks(tasksList);
+}
+
+function countActiveTasks(tasks) {
+  const newTasksList = tasks.filter(task => task.completed === false);
+  const strong = document.getElementById("countTask");
+  strong.innerHTML = newTasksList.length;
 }
