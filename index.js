@@ -98,3 +98,9 @@ function countActiveTasks(tasks) {
   const strong = document.getElementById("countTask");
   strong.innerHTML = newTasksList.length;
 }
+
+function deleteCompletedTasks() {
+  const newTasksList = tasksList.filter(task => task.completed === false);
+  tasksList = newTasksList;
+  renderTasks(tasksList);
+}
