@@ -77,6 +77,7 @@ function deleteTask(event) {
   tasksList = newTasksList;
   renderTasks(tasksList);
   countActiveTasks(tasksList);
+  checkClearCompleted(tasksList);
 }
 
 function toggleTask(event) {
@@ -91,6 +92,7 @@ function toggleTask(event) {
   });
   tasksList = newTaskList;
   countActiveTasks(tasksList);
+  checkClearCompleted(tasksList);
 }
 
 function countActiveTasks(tasks) {
@@ -103,4 +105,14 @@ function deleteCompletedTasks() {
   const newTasksList = tasksList.filter(task => task.completed === false);
   tasksList = newTasksList;
   renderTasks(tasksList);
+}
+
+function checkClearCompleted(tasks) {
+  const completedTaskList = tasks.filter(task => task.completed === true);
+  const button = document.getElementsByClassName("clear-completed")[0];
+  if (completedTaskList.length === 0) {
+    button.style.display = "none";
+  } else {
+    button.style.display = "inline-block";
+  }
 }
