@@ -59,6 +59,17 @@ function getId(tasks) {
   return newId;
 }
 
+function checkFilter(tasks) {
+  const filter = window.location.hash;
+  if (filter === "#/active") {
+    return tasks.filter(task => !task.completed);
+  }
+  if (filter === "#/completed") {
+    return tasks.filter(task => task.completed);
+  }
+  return tasks;
+}
+
 function createNewTask() {
   const input = document.getElementsByClassName("new-todo")[0];
   let newTask = {};
@@ -67,7 +78,8 @@ function createNewTask() {
   newTask.completed = false;
   tasksList.push(newTask);
   input.value = "";
-  renderTasks(tasksList);
+  const tasks = checkFilter(tasksList);
+  renderTasks(tasks);
   countActiveTasks(tasksList);
 }
 
@@ -75,7 +87,8 @@ function deleteTask(event) {
   const id = event.target.parentNode.parentNode.id;
   const newTasksList = tasksList.filter(task => task.id !== id);
   tasksList = newTasksList;
-  renderTasks(tasksList);
+  const tasks = checkFilter(tasksList);
+  renderTasks(tasks);
   countActiveTasks(tasksList);
   checkClearCompleted(tasksList);
 }
@@ -87,11 +100,12 @@ function toggleTask(event) {
       li.className = `todo ${!task.completed ? "completed" : ""}`;
       return { id: li.id, text: task.text, completed: !task.completed };
     }
-
     return task;
   });
   tasksList = newTaskList;
   countActiveTasks(tasksList);
+  const tasks = checkFilter(tasksList);
+  renderTasks(tasks);
   checkClearCompleted(tasksList);
 }
 
@@ -104,7 +118,8 @@ function countActiveTasks(tasks) {
 function deleteCompletedTasks() {
   const newTasksList = tasksList.filter(task => task.completed === false);
   tasksList = newTasksList;
-  renderTasks(tasksList);
+  const tasks = checkFilter(tasksList);
+  renderTasks(tasks);
 }
 
 function checkClearCompleted(tasks) {
@@ -117,34 +132,31 @@ function checkClearCompleted(tasks) {
   }
 }
 
-function filtredActiveTasks() {
-  const active = document.getElementById("active");
-  const all = document.getElementById("all");
-  const completed = document.getElementById("completed");
-  active.className = "selected";
-  completed.className = "";
-  all.className = "";
-  const newTasksList = tasksList.filter(task => task.completed === false);
-  renderTasks(newTasksList);
-}
-
-function filtredCompletedTasks() {
+function filtrTasks(filter) {
   const completed = document.getElementById("completed");
   const active = document.getElementById("active");
   const all = document.getElementById("all");
-  completed.className = "selected";
-  all.className = "";
-  active.className = "";
-  const newTasksList = tasksList.filter(task => task.completed === true);
-  renderTasks(newTasksList);
-}
-
-function filtredAllTasks() {
-  const completed = document.getElementById("completed");
-  const active = document.getElementById("active");
-  const all = document.getElementById("all");
-  all.className = "selected";
-  completed.className = "";
-  active.className = "";
-  renderTasks(tasksList);
+  let newTasksList;
+  switch (filter) {
+    case "all":
+      all.className = "selected";
+      completed.className = "";
+      active.className = "";
+      renderTasks(tasksList);
+      break;
+    case "active":
+      active.className = "selected";
+      all.className = "";
+      completed.className = "";
+      newTasksList = tasksList.filter(task => task.completed === false);
+      renderTasks(newTasksList);
+      break;
+    case "completed":
+      completed.className = "selected";
+      active.className = "";
+      all.className = "";
+      newTasksList = tasksList.filter(task => task.completed === true);
+      renderTasks(newTasksList);
+      break;
+  }
 }
