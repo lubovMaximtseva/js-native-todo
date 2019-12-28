@@ -116,3 +116,35 @@ function checkClearCompleted(tasks) {
     button.style.display = "inline-block";
   }
 }
+
+function filtredActiveTasks() {
+  const active = document.getElementById("active");
+  const all = document.getElementById("all");
+  const completed = document.getElementById("completed");
+  active.className = "selected";
+  completed.className = "";
+  all.className = "";
+  const newTasksList = tasksList.filter(task => task.completed === false);
+  renderTasks(newTasksList);
+}
+
+function filtredCompletedTasks() {
+  const completed = document.getElementById("completed");
+  const active = document.getElementById("active");
+  const all = document.getElementById("all");
+  completed.className = "selected";
+  all.className = "";
+  active.className = "";
+  const newTasksList = tasksList.filter(task => task.completed === true);
+  renderTasks(newTasksList);
+}
+
+function filtredAllTasks() {
+  const completed = document.getElementById("completed");
+  const active = document.getElementById("active");
+  const all = document.getElementById("all");
+  all.className = "selected";
+  completed.className = "";
+  active.className = "";
+  renderTasks(tasksList);
+}
