@@ -81,6 +81,7 @@ function createNewTask() {
   const tasks = checkFilter(tasksList);
   renderTasks(tasks);
   countActiveTasks(tasksList);
+  checkFooter(tasksList);
 }
 
 function deleteTask(event) {
@@ -91,6 +92,7 @@ function deleteTask(event) {
   renderTasks(tasks);
   countActiveTasks(tasksList);
   checkClearCompleted(tasksList);
+  checkFooter(tasksList);
 }
 
 function toggleTask(event) {
@@ -158,5 +160,14 @@ function filtrTasks(filter) {
       newTasksList = tasksList.filter(task => task.completed === true);
       renderTasks(newTasksList);
       break;
+  }
+}
+
+function checkFooter(tasks) {
+  const footer = document.getElementsByClassName("footer")[0];
+  if (tasks.length === 0) {
+    footer.style.display = "none";
+  } else {
+    footer.style.display = "";
   }
 }
