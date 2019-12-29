@@ -1,15 +1,11 @@
-let tasksList = [
-  { id: "1", text: "synthesize", completed: true },
-  { id: "2", text: "override", completed: false },
-  { id: "3", text: "index", completed: true },
-  { id: "4", text: "compress", completed: false },
-  { id: "5", text: "compress", completed: false },
-  { id: "6", text: "override", completed: true },
-  { id: "7", text: "generate", completed: true }
-];
+const localstorageTasks = JSON.parse(localStorage.getItem("tasks"));
+let tasksList = localstorageTasks ? localstorageTasks : [];
 
-renderTasks(tasksList);
-countActiveTasks(tasksList);
+window.onload = () => {
+  checkFooter(tasksList);
+  renderTasks(tasksList);
+  countActiveTasks(tasksList);
+};
 
 function createListItem(task) {
   const label = document.createElement("label");
@@ -82,6 +78,7 @@ function createNewTask() {
   renderTasks(tasks);
   countActiveTasks(tasksList);
   checkFooter(tasksList);
+  updateLocalstorage();
 }
 
 function deleteTask(event) {
@@ -93,6 +90,7 @@ function deleteTask(event) {
   countActiveTasks(tasksList);
   checkClearCompleted(tasksList);
   checkFooter(tasksList);
+  updateLocalstorage();
 }
 
 function toggleTask(event) {
@@ -109,6 +107,7 @@ function toggleTask(event) {
   const tasks = checkFilter(tasksList);
   renderTasks(tasks);
   checkClearCompleted(tasksList);
+  updateLocalstorage();
 }
 
 function countActiveTasks(tasks) {
@@ -123,6 +122,7 @@ function deleteCompletedTasks() {
   const tasks = checkFilter(tasksList);
   renderTasks(tasks);
   checkFooter(tasksList);
+  updateLocalstorage();
 }
 
 function checkClearCompleted(tasks) {
@@ -171,4 +171,8 @@ function checkFooter(tasks) {
   } else {
     footer.style.display = "";
   }
+}
+
+function updateLocalstorage() {
+  localStorage.setItem("tasks", JSON.stringify(tasksList));
 }
