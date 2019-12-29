@@ -122,6 +122,7 @@ function deleteCompletedTasks() {
   tasksList = newTasksList;
   const tasks = checkFilter(tasksList);
   renderTasks(tasks);
+  checkFooter(tasksList);
 }
 
 function checkClearCompleted(tasks) {
